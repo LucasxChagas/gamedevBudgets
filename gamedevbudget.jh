@@ -62,6 +62,12 @@ relationship OneToMany
 	Game{budgets(name)} to Budget{game(name)},
 }
 
+relationship ManyToMany
+{
+	Budget{sounds(name)} to Sound{bugdet}
+    Budget{payment(paymentType)} to Payment{budget}
+}
+
 
 
 // Set pagination options
