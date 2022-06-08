@@ -16,6 +16,13 @@
   "name": "Payment",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "budget",
+      "otherEntityRelationshipName": "payment",
+      "relationshipName": "payment",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceClass"
 }

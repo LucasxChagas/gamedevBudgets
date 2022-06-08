@@ -1,5 +1,6 @@
 package com.lucasxchagas.gamedevbudgets.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -24,6 +25,10 @@ public class Payment implements Serializable {
     @NotNull
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
+    private Budget payment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -51,6 +56,19 @@ public class Payment implements Serializable {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Budget getPayment() {
+        return this.payment;
+    }
+
+    public void setPayment(Budget budget) {
+        this.payment = budget;
+    }
+
+    public Payment payment(Budget budget) {
+        this.setPayment(budget);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

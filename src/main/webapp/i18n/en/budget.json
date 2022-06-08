@@ -20,7 +20,6 @@
       "id": "ID",
       "name": "Name",
       "createdAt": "Created At",
-      "sounds": "Sounds",
       "game": "Game"
     }
   }

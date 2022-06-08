@@ -18,6 +18,12 @@
         <dd>
           <span>{{ payment.paymentType }}</span>
         </dd>
+        <dt><span jhiTranslate="gamedevBudgetsApp.payment.payment">Payment</span></dt>
+        <dd>
+          <div *ngIf="payment.payment">
+            <a [routerLink]="['/budget', payment.payment?.id, 'view']">{{ payment.payment?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

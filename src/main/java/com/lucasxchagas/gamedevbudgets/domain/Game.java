@@ -46,7 +46,7 @@ public class Game implements Serializable {
 
     @OneToMany(mappedBy = "game")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sounds", "game" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
     private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

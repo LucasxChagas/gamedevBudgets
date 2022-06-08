@@ -4,13 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
     <!--
-        Added the constraints for entity Sounds.
+        Added the constraints for entity Payment.
     -->
-    <changeSet id="20220608004604-2" author="jhipster">
+    <changeSet id="20220608004603-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="sounds_id"
-                                 baseTableName="sounds"
-                                 constraintName="fk_sounds__sounds_id"
+        <addForeignKeyConstraint baseColumnNames="payment_id"
+                                 baseTableName="payment"
+                                 constraintName="fk_payment__payment_id"
                                  referencedColumnNames="id"
                                  referencedTableName="budget"/>
     </changeSet>

@@ -22,13 +22,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "sounds",
-      "otherEntityName": "sounds",
-      "otherEntityRelationshipName": "bugdet",
-      "relationshipName": "sounds",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityField": "name",
       "otherEntityName": "game",
       "otherEntityRelationshipName": "budgets",
