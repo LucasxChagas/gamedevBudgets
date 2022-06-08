@@ -35,6 +35,7 @@
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.name">Name</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.createdAt">Created At</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.payment">Payment</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.game">Game</span></th>
           <th scope="col"></th>
         </tr>
@@ -46,6 +47,12 @@
           </td>
           <td>{{ budget.name }}</td>
           <td>{{ budget.createdAt | formatMediumDatetime }}</td>
+          <td>
+            <span *ngFor="let payment of budget.payments; let last = last">
+              <a class="form-control-static" [routerLink]="['/payment', payment.id, 'view']">{{ payment.paymentType }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
           <td>
             <div *ngIf="budget.game">
               <a [routerLink]="['/game', budget.game?.id, 'view']">{{ budget.game?.name }}</a>

@@ -20,6 +20,8 @@
       "id": "ID",
       "name": "Name",
       "createdAt": "Created At",
+      "sounds": "Sounds",
+      "payment": "Payment",
       "game": "Game"
     }
   }

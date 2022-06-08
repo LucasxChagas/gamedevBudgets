@@ -26,6 +26,12 @@
         <dd>
           <span jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</span>
         </dd>
+        <dt><span jhiTranslate="gamedevBudgetsApp.sounds.bugdet">Bugdet</span></dt>
+        <dd>
+          <div *ngIf="sounds.bugdet">
+            <a [routerLink]="['/budget', sounds.bugdet?.id, 'view']">{{ sounds.bugdet?.name }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

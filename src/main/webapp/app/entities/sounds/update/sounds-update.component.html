@@ -42,6 +42,19 @@
             </option>
           </select>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.sounds.bugdet" for="field_bugdet">Bugdet</label>
+          <select class="form-control" id="field_bugdet" data-cy="bugdet" name="bugdet" formControlName="bugdet">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="budgetOption.id === editForm.get('bugdet')!.value?.id ? editForm.get('bugdet')!.value : budgetOption"
+              *ngFor="let budgetOption of budgetsSharedCollection; trackBy: trackBudgetById"
+            >
+              {{ budgetOption.name }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

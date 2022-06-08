@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,7 +87,20 @@ public class SoundsService {
     @Transactional(readOnly = true)
     public List<SoundsDTO> findAll() {
         log.debug("Request to get all Sounds");
-        return soundsRepository.findAll().stream().map(soundsMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return soundsRepository
+            .findAllWithEagerRelationships()
+            .stream()
+            .map(soundsMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the sounds with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<SoundsDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return soundsRepository.findAllWithEagerRelationships(pageable).map(soundsMapper::toDto);
     }
 
     /**
@@ -97,7 +112,7 @@ public class SoundsService {
     @Transactional(readOnly = true)
     public Optional<SoundsDTO> findOne(Long id) {
         log.debug("Request to get Sounds : {}", id);
-        return soundsRepository.findById(id).map(soundsMapper::toDto);
+        return soundsRepository.findOneWithEagerRelationships(id).map(soundsMapper::toDto);
     }
 
     /**

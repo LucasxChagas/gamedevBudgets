@@ -23,6 +23,21 @@
   "relationships": [
     {
       "otherEntityField": "name",
+      "otherEntityName": "sounds",
+      "otherEntityRelationshipName": "bugdet",
+      "relationshipName": "sounds",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "paymentType",
+      "otherEntityName": "payment",
+      "otherEntityRelationshipName": "budget",
+      "ownerSide": true,
+      "relationshipName": "payment",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "name",
       "otherEntityName": "game",
       "otherEntityRelationshipName": "budgets",
       "relationshipName": "game",
