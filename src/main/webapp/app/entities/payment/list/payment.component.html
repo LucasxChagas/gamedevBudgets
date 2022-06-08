@@ -34,6 +34,7 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.payment.paymentType">Payment Type</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.payment.payment">Payment</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -43,6 +44,11 @@
             <a [routerLink]="['/payment', payment.id, 'view']">{{ payment.id }}</a>
           </td>
           <td>{{ payment.paymentType }}</td>
+          <td>
+            <div *ngIf="payment.payment">
+              <a [routerLink]="['/budget', payment.payment?.id, 'view']">{{ payment.payment?.id }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

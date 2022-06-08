@@ -28,7 +28,7 @@ export class SoundsUpdateComponent implements OnInit {
     name: [null, [Validators.required]],
     type: [],
     format: [],
-    bugdet: [],
+    sounds: [],
   });
 
   constructor(
@@ -89,17 +89,17 @@ export class SoundsUpdateComponent implements OnInit {
       name: sounds.name,
       type: sounds.type,
       format: sounds.format,
-      bugdet: sounds.bugdet,
+      sounds: sounds.sounds,
     });
 
-    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, sounds.bugdet);
+    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, sounds.sounds);
   }
 
   protected loadRelationshipsOptions(): void {
     this.budgetService
       .query()
       .pipe(map((res: HttpResponse<IBudget[]>) => res.body ?? []))
-      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('bugdet')!.value)))
+      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('sounds')!.value)))
       .subscribe((budgets: IBudget[]) => (this.budgetsSharedCollection = budgets));
   }
 
@@ -110,7 +110,7 @@ export class SoundsUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       type: this.editForm.get(['type'])!.value,
       format: this.editForm.get(['format'])!.value,
-      bugdet: this.editForm.get(['bugdet'])!.value,
+      sounds: this.editForm.get(['sounds'])!.value,
     };
   }
 }

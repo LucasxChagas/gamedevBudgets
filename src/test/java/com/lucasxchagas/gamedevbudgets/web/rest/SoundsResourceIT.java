@@ -2,7 +2,6 @@ package com.lucasxchagas.gamedevbudgets.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -11,23 +10,16 @@ import com.lucasxchagas.gamedevbudgets.domain.Sounds;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundFormats;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundTypes;
 import com.lucasxchagas.gamedevbudgets.repository.SoundsRepository;
-import com.lucasxchagas.gamedevbudgets.service.SoundsService;
 import com.lucasxchagas.gamedevbudgets.service.dto.SoundsDTO;
 import com.lucasxchagas.gamedevbudgets.service.mapper.SoundsMapper;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link SoundsResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class SoundsResourceIT {
@@ -60,14 +51,8 @@ class SoundsResourceIT {
     @Autowired
     private SoundsRepository soundsRepository;
 
-    @Mock
-    private SoundsRepository soundsRepositoryMock;
-
     @Autowired
     private SoundsMapper soundsMapper;
-
-    @Mock
-    private SoundsService soundsServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -175,24 +160,6 @@ class SoundsResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].format").value(hasItem(DEFAULT_FORMAT.toString())));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllSoundsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(soundsServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restSoundsMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(soundsServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllSoundsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(soundsServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restSoundsMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(soundsServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

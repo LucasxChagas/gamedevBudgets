@@ -3,8 +3,6 @@ package com.lucasxchagas.gamedevbudgets.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -31,11 +29,6 @@ public class Budget implements Serializable {
 
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
-
-    @OneToMany(mappedBy = "bugdet")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "bugdet" }, allowSetters = true)
-    private Set<Sounds> sounds = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
@@ -80,37 +73,6 @@ public class Budget implements Serializable {
 
     public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Set<Sounds> getSounds() {
-        return this.sounds;
-    }
-
-    public void setSounds(Set<Sounds> sounds) {
-        if (this.sounds != null) {
-            this.sounds.forEach(i -> i.setBugdet(null));
-        }
-        if (sounds != null) {
-            sounds.forEach(i -> i.setBugdet(this));
-        }
-        this.sounds = sounds;
-    }
-
-    public Budget sounds(Set<Sounds> sounds) {
-        this.setSounds(sounds);
-        return this;
-    }
-
-    public Budget addSounds(Sounds sounds) {
-        this.sounds.add(sounds);
-        sounds.setBugdet(this);
-        return this;
-    }
-
-    public Budget removeSounds(Sounds sounds) {
-        this.sounds.remove(sounds);
-        sounds.setBugdet(null);
-        return this;
     }
 
     public Game getGame() {

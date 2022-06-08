@@ -20,7 +20,7 @@ public class SoundsDTO implements Serializable {
 
     private SoundFormats format;
 
-    private BudgetDTO bugdet;
+    private BudgetDTO sounds;
 
     public Long getId() {
         return id;
@@ -54,12 +54,12 @@ public class SoundsDTO implements Serializable {
         this.format = format;
     }
 
-    public BudgetDTO getBugdet() {
-        return bugdet;
+    public BudgetDTO getSounds() {
+        return sounds;
     }
 
-    public void setBugdet(BudgetDTO bugdet) {
-        this.bugdet = bugdet;
+    public void setSounds(BudgetDTO sounds) {
+        this.sounds = sounds;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class SoundsDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
             ", format='" + getFormat() + "'" +
-            ", bugdet=" + getBugdet() +
+            ", sounds=" + getSounds() +
             "}";
     }
 }

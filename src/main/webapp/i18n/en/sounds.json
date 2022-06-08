@@ -21,7 +21,7 @@
       "name": "Name",
       "type": "Type",
       "format": "Format",
-      "bugdet": "Bugdet"
+      "sounds": "Sounds"
     }
   }
 }

@@ -28,10 +28,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "name",
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "sounds",
-      "relationshipName": "bugdet",
+      "relationshipName": "sounds",
       "relationshipType": "many-to-one"
     }
   ],

@@ -18,7 +18,8 @@
         "title": "Payment"
       },
       "id": "ID",
-      "paymentType": "Payment Type"
+      "paymentType": "Payment Type",
+      "payment": "Payment"
     }
   }
 }

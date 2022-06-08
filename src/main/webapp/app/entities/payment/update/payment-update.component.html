@@ -33,6 +33,19 @@
             </small>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.payment.payment" for="field_payment">Payment</label>
+          <select class="form-control" id="field_payment" data-cy="payment" name="payment" formControlName="payment">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="budgetOption.id === editForm.get('payment')!.value?.id ? editForm.get('payment')!.value : budgetOption"
+              *ngFor="let budgetOption of budgetsSharedCollection; trackBy: trackBudgetById"
+            >
+              {{ budgetOption.id }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>
