@@ -27,6 +27,22 @@
       "otherEntityRelationshipName": "budgets",
       "relationshipName": "game",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "sounds",
+      "otherEntityRelationshipName": "budget",
+      "ownerSide": false,
+      "relationshipName": "sounds",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "maymentType",
+      "otherEntityName": "payment",
+      "otherEntityRelationshipName": "budget",
+      "ownerSide": false,
+      "relationshipName": "payment",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

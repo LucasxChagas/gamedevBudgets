@@ -28,7 +28,7 @@ export class SoundsUpdateComponent implements OnInit {
     name: [null, [Validators.required]],
     type: [],
     format: [],
-    budget: [],
+    budgets: [],
   });
 
   constructor(
@@ -64,6 +64,17 @@ export class SoundsUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  getSelectedBudget(option: IBudget, selectedVals?: IBudget[]): IBudget {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISounds>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -89,17 +100,24 @@ export class SoundsUpdateComponent implements OnInit {
       name: sounds.name,
       type: sounds.type,
       format: sounds.format,
-      budget: sounds.budget,
+      budgets: sounds.budgets,
     });
 
-    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, sounds.budget);
+    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(
+      this.budgetsSharedCollection,
+      ...(sounds.budgets ?? [])
+    );
   }
 
   protected loadRelationshipsOptions(): void {
     this.budgetService
       .query()
       .pipe(map((res: HttpResponse<IBudget[]>) => res.body ?? []))
-      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('budget')!.value)))
+      .pipe(
+        map((budgets: IBudget[]) =>
+          this.budgetService.addBudgetToCollectionIfMissing(budgets, ...(this.editForm.get('budgets')!.value ?? []))
+        )
+      )
       .subscribe((budgets: IBudget[]) => (this.budgetsSharedCollection = budgets));
   }
 
@@ -110,7 +128,7 @@ export class SoundsUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       type: this.editForm.get(['type'])!.value,
       format: this.editForm.get(['format'])!.value,
-      budget: this.editForm.get(['budget'])!.value,
+      budgets: this.editForm.get(['budgets'])!.value,
     };
   }
 }

@@ -18,10 +18,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "payment",
+      "ownerSide": true,
       "relationshipName": "budget",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

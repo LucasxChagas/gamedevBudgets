@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,7 +87,20 @@ public class PaymentService {
     @Transactional(readOnly = true)
     public List<PaymentDTO> findAll() {
         log.debug("Request to get all Payments");
-        return paymentRepository.findAll().stream().map(paymentMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return paymentRepository
+            .findAllWithEagerRelationships()
+            .stream()
+            .map(paymentMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
+     * Get all the payments with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<PaymentDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return paymentRepository.findAllWithEagerRelationships(pageable).map(paymentMapper::toDto);
     }
 
     /**
@@ -97,7 +112,7 @@ public class PaymentService {
     @Transactional(readOnly = true)
     public Optional<PaymentDTO> findOne(Long id) {
         log.debug("Request to get Payment : {}", id);
-        return paymentRepository.findById(id).map(paymentMapper::toDto);
+        return paymentRepository.findOneWithEagerRelationships(id).map(paymentMapper::toDto);
     }
 
     /**

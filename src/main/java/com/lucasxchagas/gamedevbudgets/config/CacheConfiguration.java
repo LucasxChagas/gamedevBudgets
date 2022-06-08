@@ -56,6 +56,7 @@ public class CacheConfiguration {
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Budget.class.getName() + ".sounds");
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Budget.class.getName() + ".payments");
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Payment.class.getName() + ".budgets");
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Sounds.class.getName() + ".budgets");
             // jhipster-needle-ehcache-add-entry
         };
     }

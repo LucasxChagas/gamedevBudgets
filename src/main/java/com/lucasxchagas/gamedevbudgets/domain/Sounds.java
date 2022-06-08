@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundFormats;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundTypes;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -36,9 +38,15 @@ public class Sounds implements Serializable {
     @Column(name = "format")
     private SoundFormats format;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
-    private Budget budget;
+    @ManyToMany
+    @JoinTable(
+        name = "rel_sounds__budget",
+        joinColumns = @JoinColumn(name = "sounds_id"),
+        inverseJoinColumns = @JoinColumn(name = "budget_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "game", "sounds", "payments" }, allowSetters = true)
+    private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -94,16 +102,28 @@ public class Sounds implements Serializable {
         this.format = format;
     }
 
-    public Budget getBudget() {
-        return this.budget;
+    public Set<Budget> getBudgets() {
+        return this.budgets;
     }
 
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setBudgets(Set<Budget> budgets) {
+        this.budgets = budgets;
     }
 
-    public Sounds budget(Budget budget) {
-        this.setBudget(budget);
+    public Sounds budgets(Set<Budget> budgets) {
+        this.setBudgets(budgets);
+        return this;
+    }
+
+    public Sounds addBudget(Budget budget) {
+        this.budgets.add(budget);
+        budget.getSounds().add(this);
+        return this;
+    }
+
+    public Sounds removeBudget(Budget budget) {
+        this.budgets.remove(budget);
+        budget.getSounds().remove(this);
         return this;
     }
 

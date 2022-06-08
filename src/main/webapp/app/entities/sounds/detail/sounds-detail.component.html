@@ -28,9 +28,10 @@
         </dd>
         <dt><span jhiTranslate="gamedevBudgetsApp.sounds.budget">Budget</span></dt>
         <dd>
-          <div *ngIf="sounds.budget">
-            <a [routerLink]="['/budget', sounds.budget?.id, 'view']">{{ sounds.budget?.id }}</a>
-          </div>
+          <span *ngFor="let budget of sounds.budgets; let last = last">
+            <a [routerLink]="['/budget', budget?.id, 'view']">{{ budget.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
         </dd>
       </dl>
 

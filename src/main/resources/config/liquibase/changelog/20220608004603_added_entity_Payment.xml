@@ -17,11 +17,22 @@
             <column name="payment_type" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="budget_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20220608004603-1-relations" author="jhipster">
+
+        <createTable tableName="rel_payment__budget">
+            <column name="budget_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="payment_id, budget_id" tableName="rel_payment__budget"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

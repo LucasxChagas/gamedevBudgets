@@ -22,7 +22,7 @@ export class PaymentUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     paymentType: [null, [Validators.required]],
-    budget: [],
+    budgets: [],
   });
 
   constructor(
@@ -58,6 +58,17 @@ export class PaymentUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  getSelectedBudget(option: IBudget, selectedVals?: IBudget[]): IBudget {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPayment>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -81,17 +92,24 @@ export class PaymentUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: payment.id,
       paymentType: payment.paymentType,
-      budget: payment.budget,
+      budgets: payment.budgets,
     });
 
-    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, payment.budget);
+    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(
+      this.budgetsSharedCollection,
+      ...(payment.budgets ?? [])
+    );
   }
 
   protected loadRelationshipsOptions(): void {
     this.budgetService
       .query()
       .pipe(map((res: HttpResponse<IBudget[]>) => res.body ?? []))
-      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('budget')!.value)))
+      .pipe(
+        map((budgets: IBudget[]) =>
+          this.budgetService.addBudgetToCollectionIfMissing(budgets, ...(this.editForm.get('budgets')!.value ?? []))
+        )
+      )
       .subscribe((budgets: IBudget[]) => (this.budgetsSharedCollection = budgets));
   }
 
@@ -100,7 +118,7 @@ export class PaymentUpdateComponent implements OnInit {
       ...new Payment(),
       id: this.editForm.get(['id'])!.value,
       paymentType: this.editForm.get(['paymentType'])!.value,
-      budget: this.editForm.get(['budget'])!.value,
+      budgets: this.editForm.get(['budgets'])!.value,
     };
   }
 }

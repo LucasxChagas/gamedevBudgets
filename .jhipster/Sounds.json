@@ -28,10 +28,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "sounds",
+      "ownerSide": true,
       "relationshipName": "budget",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"
