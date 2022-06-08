@@ -48,12 +48,12 @@ describe('Sounds Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Budget query and add missing value', () => {
       const sounds: ISounds = { id: 456 };
-      const sounds: IBudget = { id: 8800 };
-      sounds.sounds = sounds;
+      const budget: IBudget = { id: 8800 };
+      sounds.budget = budget;
 
       const budgetCollection: IBudget[] = [{ id: 32628 }];
       jest.spyOn(budgetService, 'query').mockReturnValue(of(new HttpResponse({ body: budgetCollection })));
-      const additionalBudgets = [sounds];
+      const additionalBudgets = [budget];
       const expectedCollection: IBudget[] = [...additionalBudgets, ...budgetCollection];
       jest.spyOn(budgetService, 'addBudgetToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -67,14 +67,14 @@ describe('Sounds Management Update Component', () => {
 
     it('Should update editForm', () => {
       const sounds: ISounds = { id: 456 };
-      const sounds: IBudget = { id: 6518 };
-      sounds.sounds = sounds;
+      const budget: IBudget = { id: 6518 };
+      sounds.budget = budget;
 
       activatedRoute.data = of({ sounds });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(sounds));
-      expect(comp.budgetsSharedCollection).toContain(sounds);
+      expect(comp.budgetsSharedCollection).toContain(budget);
     });
   });
 

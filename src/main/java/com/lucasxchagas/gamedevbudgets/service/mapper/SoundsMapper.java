@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface SoundsMapper extends EntityMapper<SoundsDTO, Sounds> {
-    @Mapping(target = "sounds", source = "sounds", qualifiedByName = "budgetId")
+    @Mapping(target = "budget", source = "budget", qualifiedByName = "budgetId")
     SoundsDTO toDto(Sounds s);
 
     @Named("budgetId")

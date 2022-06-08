@@ -20,7 +20,7 @@
     {
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "payment",
-      "relationshipName": "payment",
+      "relationshipName": "budget",
       "relationshipType": "many-to-one"
     }
   ],

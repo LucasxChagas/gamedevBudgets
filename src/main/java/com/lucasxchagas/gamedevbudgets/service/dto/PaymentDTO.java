@@ -14,7 +14,7 @@ public class PaymentDTO implements Serializable {
     @NotNull
     private String paymentType;
 
-    private BudgetDTO payment;
+    private BudgetDTO budget;
 
     public Long getId() {
         return id;
@@ -32,12 +32,12 @@ public class PaymentDTO implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public BudgetDTO getPayment() {
-        return payment;
+    public BudgetDTO getBudget() {
+        return budget;
     }
 
-    public void setPayment(BudgetDTO payment) {
-        this.payment = payment;
+    public void setBudget(BudgetDTO budget) {
+        this.budget = budget;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class PaymentDTO implements Serializable {
         return "PaymentDTO{" +
             "id=" + getId() +
             ", paymentType='" + getPaymentType() + "'" +
-            ", payment=" + getPayment() +
+            ", budget=" + getBudget() +
             "}";
     }
 }

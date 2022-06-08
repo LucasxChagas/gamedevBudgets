@@ -22,7 +22,7 @@ export class PaymentUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     paymentType: [null, [Validators.required]],
-    payment: [],
+    budget: [],
   });
 
   constructor(
@@ -81,17 +81,17 @@ export class PaymentUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: payment.id,
       paymentType: payment.paymentType,
-      payment: payment.payment,
+      budget: payment.budget,
     });
 
-    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, payment.payment);
+    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, payment.budget);
   }
 
   protected loadRelationshipsOptions(): void {
     this.budgetService
       .query()
       .pipe(map((res: HttpResponse<IBudget[]>) => res.body ?? []))
-      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('payment')!.value)))
+      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('budget')!.value)))
       .subscribe((budgets: IBudget[]) => (this.budgetsSharedCollection = budgets));
   }
 
@@ -100,7 +100,7 @@ export class PaymentUpdateComponent implements OnInit {
       ...new Payment(),
       id: this.editForm.get(['id'])!.value,
       paymentType: this.editForm.get(['paymentType'])!.value,
-      payment: this.editForm.get(['payment'])!.value,
+      budget: this.editForm.get(['budget'])!.value,
     };
   }
 }

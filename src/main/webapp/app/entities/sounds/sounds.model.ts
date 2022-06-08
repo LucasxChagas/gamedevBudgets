@@ -7,7 +7,7 @@ export interface ISounds {
   name?: string;
   type?: SoundTypes | null;
   format?: SoundFormats | null;
-  sounds?: IBudget | null;
+  budget?: IBudget | null;
 }
 
 export class Sounds implements ISounds {
@@ -16,7 +16,7 @@ export class Sounds implements ISounds {
     public name?: string,
     public type?: SoundTypes | null,
     public format?: SoundFormats | null,
-    public sounds?: IBudget | null
+    public budget?: IBudget | null
   ) {}
 }
 

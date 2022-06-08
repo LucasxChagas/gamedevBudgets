@@ -48,12 +48,12 @@ describe('Payment Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Budget query and add missing value', () => {
       const payment: IPayment = { id: 456 };
-      const payment: IBudget = { id: 26293 };
-      payment.payment = payment;
+      const budget: IBudget = { id: 26293 };
+      payment.budget = budget;
 
       const budgetCollection: IBudget[] = [{ id: 38648 }];
       jest.spyOn(budgetService, 'query').mockReturnValue(of(new HttpResponse({ body: budgetCollection })));
-      const additionalBudgets = [payment];
+      const additionalBudgets = [budget];
       const expectedCollection: IBudget[] = [...additionalBudgets, ...budgetCollection];
       jest.spyOn(budgetService, 'addBudgetToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -67,14 +67,14 @@ describe('Payment Management Update Component', () => {
 
     it('Should update editForm', () => {
       const payment: IPayment = { id: 456 };
-      const payment: IBudget = { id: 18588 };
-      payment.payment = payment;
+      const budget: IBudget = { id: 18588 };
+      payment.budget = budget;
 
       activatedRoute.data = of({ payment });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(payment));
-      expect(comp.budgetsSharedCollection).toContain(payment);
+      expect(comp.budgetsSharedCollection).toContain(budget);
     });
   });
 

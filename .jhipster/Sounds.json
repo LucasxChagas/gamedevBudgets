@@ -30,7 +30,7 @@
     {
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "sounds",
-      "relationshipName": "sounds",
+      "relationshipName": "budget",
       "relationshipType": "many-to-one"
     }
   ],

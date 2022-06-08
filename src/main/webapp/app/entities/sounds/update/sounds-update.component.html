@@ -44,11 +44,11 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="gamedevBudgetsApp.sounds.sounds" for="field_sounds">Sounds</label>
-          <select class="form-control" id="field_sounds" data-cy="sounds" name="sounds" formControlName="sounds">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.sounds.budget" for="field_budget">Budget</label>
+          <select class="form-control" id="field_budget" data-cy="budget" name="budget" formControlName="budget">
             <option [ngValue]="null"></option>
             <option
-              [ngValue]="budgetOption.id === editForm.get('sounds')!.value?.id ? editForm.get('sounds')!.value : budgetOption"
+              [ngValue]="budgetOption.id === editForm.get('budget')!.value?.id ? editForm.get('budget')!.value : budgetOption"
               *ngFor="let budgetOption of budgetsSharedCollection; trackBy: trackBudgetById"
             >
               {{ budgetOption.id }}

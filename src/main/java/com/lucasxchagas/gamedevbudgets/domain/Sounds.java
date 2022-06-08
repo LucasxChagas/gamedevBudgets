@@ -38,7 +38,7 @@ public class Sounds implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
-    private Budget sounds;
+    private Budget budget;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -94,16 +94,16 @@ public class Sounds implements Serializable {
         this.format = format;
     }
 
-    public Budget getSounds() {
-        return this.sounds;
+    public Budget getBudget() {
+        return this.budget;
     }
 
-    public void setSounds(Budget budget) {
-        this.sounds = budget;
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 
-    public Sounds sounds(Budget budget) {
-        this.setSounds(budget);
+    public Sounds budget(Budget budget) {
+        this.setBudget(budget);
         return this;
     }
 
