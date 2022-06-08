@@ -60,7 +60,7 @@ enum GamePlatform {
 relationship OneToMany
 {
 	Game{budgets(name)} to Budget{game(name)},
-    Budget{sounds(name)} to Sound{bugdet(name)}
+    Budget{sounds(name)} to Sounds{bugdet(name)}
 }
 
 relationship ManyToMany
