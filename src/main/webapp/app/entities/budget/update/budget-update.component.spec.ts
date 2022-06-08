@@ -8,6 +8,8 @@ import { of, Subject, from } from 'rxjs';
 
 import { BudgetService } from '../service/budget.service';
 import { IBudget, Budget } from '../budget.model';
+import { ISounds } from 'app/entities/sounds/sounds.model';
+import { SoundsService } from 'app/entities/sounds/service/sounds.service';
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
 
@@ -18,6 +20,7 @@ describe('Budget Management Update Component', () => {
   let fixture: ComponentFixture<BudgetUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let budgetService: BudgetService;
+  let soundsService: SoundsService;
   let gameService: GameService;
 
   beforeEach(() => {
@@ -40,12 +43,32 @@ describe('Budget Management Update Component', () => {
     fixture = TestBed.createComponent(BudgetUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     budgetService = TestBed.inject(BudgetService);
+    soundsService = TestBed.inject(SoundsService);
     gameService = TestBed.inject(GameService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
+    it('Should call Sounds query and add missing value', () => {
+      const budget: IBudget = { id: 456 };
+      const sounds: ISounds[] = [{ id: 70909 }];
+      budget.sounds = sounds;
+
+      const soundsCollection: ISounds[] = [{ id: 47431 }];
+      jest.spyOn(soundsService, 'query').mockReturnValue(of(new HttpResponse({ body: soundsCollection })));
+      const additionalSounds = [...sounds];
+      const expectedCollection: ISounds[] = [...additionalSounds, ...soundsCollection];
+      jest.spyOn(soundsService, 'addSoundsToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ budget });
+      comp.ngOnInit();
+
+      expect(soundsService.query).toHaveBeenCalled();
+      expect(soundsService.addSoundsToCollectionIfMissing).toHaveBeenCalledWith(soundsCollection, ...additionalSounds);
+      expect(comp.soundsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call Game query and add missing value', () => {
       const budget: IBudget = { id: 456 };
       const game: IGame = { id: 16763 };
@@ -67,6 +90,8 @@ describe('Budget Management Update Component', () => {
 
     it('Should update editForm', () => {
       const budget: IBudget = { id: 456 };
+      const sounds: ISounds = { id: 75448 };
+      budget.sounds = [sounds];
       const game: IGame = { id: 75387 };
       budget.game = game;
 
@@ -74,6 +99,7 @@ describe('Budget Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(budget));
+      expect(comp.soundsSharedCollection).toContain(sounds);
       expect(comp.gamesSharedCollection).toContain(game);
     });
   });
@@ -143,11 +169,47 @@ describe('Budget Management Update Component', () => {
   });
 
   describe('Tracking relationships identifiers', () => {
+    describe('trackSoundsById', () => {
+      it('Should return tracked Sounds primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackSoundsById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
     describe('trackGameById', () => {
       it('Should return tracked Game primary key', () => {
         const entity = { id: 123 };
         const trackResult = comp.trackGameById(0, entity);
         expect(trackResult).toEqual(entity.id);
+      });
+    });
+  });
+
+  describe('Getting selected relationships', () => {
+    describe('getSelectedSounds', () => {
+      it('Should return option if no Sounds is selected', () => {
+        const option = { id: 123 };
+        const result = comp.getSelectedSounds(option);
+        expect(result === option).toEqual(true);
+      });
+
+      it('Should return selected Sounds for according option', () => {
+        const option = { id: 123 };
+        const selected = { id: 123 };
+        const selected2 = { id: 456 };
+        const result = comp.getSelectedSounds(option, [selected2, selected]);
+        expect(result === selected).toEqual(true);
+        expect(result === selected2).toEqual(false);
+        expect(result === option).toEqual(false);
+      });
+
+      it('Should return option if this Sounds is not selected', () => {
+        const option = { id: 123 };
+        const selected = { id: 456 };
+        const result = comp.getSelectedSounds(option, [selected]);
+        expect(result === option).toEqual(true);
+        expect(result === selected).toEqual(false);
       });
     });
   });

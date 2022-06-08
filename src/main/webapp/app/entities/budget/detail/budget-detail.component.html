@@ -22,6 +22,13 @@
         <dd>
           <span>{{ budget.createdAt | formatMediumDatetime }}</span>
         </dd>
+        <dt><span jhiTranslate="gamedevBudgetsApp.budget.sounds">Sounds</span></dt>
+        <dd>
+          <span *ngFor="let sounds of budget.sounds; let last = last">
+            <a [routerLink]="['/sounds', sounds?.id, 'view']">{{ sounds.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
         <dt><span jhiTranslate="gamedevBudgetsApp.budget.game">Game</span></dt>
         <dd>
           <div *ngIf="budget.game">

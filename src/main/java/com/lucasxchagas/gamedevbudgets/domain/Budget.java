@@ -32,13 +32,32 @@ public class Budget implements Serializable {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
+    @ManyToMany
+    @JoinTable(
+        name = "rel_budget__sounds",
+        joinColumns = @JoinColumn(name = "budget_id"),
+        inverseJoinColumns = @JoinColumn(name = "sounds_id")
+    )
+    @ManyToMany(mappedBy = "budgets")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "budgets", "budgets" }, allowSetters = true)
+    private Set<Sounds> sounds = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
     private Game game;
 
+    @ManyToMany
+    @JoinTable(
+        name = "rel_budget__sounds",
+        joinColumns = @JoinColumn(name = "budget_id"),
+        inverseJoinColumns = @JoinColumn(name = "sounds_id")
+    )
     @ManyToMany(mappedBy = "budgets")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "budgets", "budgets" }, allowSetters = true)
     private Set<Sounds> sounds = new HashSet<>();
 
     @ManyToMany(mappedBy = "budgets")
@@ -85,6 +104,31 @@ public class Budget implements Serializable {
 
     public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<Sounds> getSounds() {
+        return this.sounds;
+    }
+
+    public void setSounds(Set<Sounds> sounds) {
+        this.sounds = sounds;
+    }
+
+    public Budget sounds(Set<Sounds> sounds) {
+        this.setSounds(sounds);
+        return this;
+    }
+
+    public Budget addSounds(Sounds sounds) {
+        this.sounds.add(sounds);
+        sounds.getBudgets().add(this);
+        return this;
+    }
+
+    public Budget removeSounds(Sounds sounds) {
+        this.sounds.remove(sounds);
+        sounds.getBudgets().remove(this);
+        return this;
     }
 
     public Game getGame() {

@@ -21,6 +21,7 @@
       "name": "Name",
       "type": "Type",
       "format": "Format",
+      "budget": "Budget",
       "budget": "Budget"
     }
   }

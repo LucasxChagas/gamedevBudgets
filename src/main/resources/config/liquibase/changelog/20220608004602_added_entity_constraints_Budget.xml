@@ -8,6 +8,18 @@
     -->
     <changeSet id="20220608004602-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="budget_id"
+                                 baseTableName="rel_budget__sounds"
+                                 constraintName="fk_rel_budget__sounds__budget_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="budget"/>
+
+        <addForeignKeyConstraint baseColumnNames="sounds_id"
+                                 baseTableName="rel_budget__sounds"
+                                 constraintName="fk_rel_budget__sounds__sounds_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sounds"/>
+
         <addForeignKeyConstraint baseColumnNames="game_id"
                                  baseTableName="budget"
                                  constraintName="fk_budget__game_id"
