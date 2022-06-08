@@ -1,3 +1,4 @@
+import { IBudget } from 'app/entities/budget/budget.model';
 import { SoundTypes } from 'app/entities/enumerations/sound-types.model';
 import { SoundFormats } from 'app/entities/enumerations/sound-formats.model';
 
@@ -6,10 +7,17 @@ export interface ISounds {
   name?: string;
   type?: SoundTypes | null;
   format?: SoundFormats | null;
+  bugdet?: IBudget | null;
 }
 
 export class Sounds implements ISounds {
-  constructor(public id?: number, public name?: string, public type?: SoundTypes | null, public format?: SoundFormats | null) {}
+  constructor(
+    public id?: number,
+    public name?: string,
+    public type?: SoundTypes | null,
+    public format?: SoundFormats | null,
+    public bugdet?: IBudget | null
+  ) {}
 }
 
 export function getSoundsIdentifier(sounds: ISounds): number | undefined {

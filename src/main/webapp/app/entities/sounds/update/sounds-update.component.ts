@@ -3,10 +3,12 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { ISounds, Sounds } from '../sounds.model';
 import { SoundsService } from '../service/sounds.service';
+import { IBudget } from 'app/entities/budget/budget.model';
+import { BudgetService } from 'app/entities/budget/service/budget.service';
 import { SoundTypes } from 'app/entities/enumerations/sound-types.model';
 import { SoundFormats } from 'app/entities/enumerations/sound-formats.model';
 
@@ -19,18 +21,28 @@ export class SoundsUpdateComponent implements OnInit {
   soundTypesValues = Object.keys(SoundTypes);
   soundFormatsValues = Object.keys(SoundFormats);
 
+  budgetsSharedCollection: IBudget[] = [];
+
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     type: [],
     format: [],
+    bugdet: [],
   });
 
-  constructor(protected soundsService: SoundsService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(
+    protected soundsService: SoundsService,
+    protected budgetService: BudgetService,
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ sounds }) => {
       this.updateForm(sounds);
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -46,6 +58,10 @@ export class SoundsUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.soundsService.create(sounds));
     }
+  }
+
+  trackBudgetById(_index: number, item: IBudget): number {
+    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ISounds>>): void {
@@ -73,7 +89,18 @@ export class SoundsUpdateComponent implements OnInit {
       name: sounds.name,
       type: sounds.type,
       format: sounds.format,
+      bugdet: sounds.bugdet,
     });
+
+    this.budgetsSharedCollection = this.budgetService.addBudgetToCollectionIfMissing(this.budgetsSharedCollection, sounds.bugdet);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.budgetService
+      .query()
+      .pipe(map((res: HttpResponse<IBudget[]>) => res.body ?? []))
+      .pipe(map((budgets: IBudget[]) => this.budgetService.addBudgetToCollectionIfMissing(budgets, this.editForm.get('bugdet')!.value)))
+      .subscribe((budgets: IBudget[]) => (this.budgetsSharedCollection = budgets));
   }
 
   protected createFromForm(): ISounds {
@@ -83,6 +110,7 @@ export class SoundsUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       type: this.editForm.get(['type'])!.value,
       format: this.editForm.get(['format'])!.value,
+      bugdet: this.editForm.get(['bugdet'])!.value,
     };
   }
 }

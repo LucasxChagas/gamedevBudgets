@@ -135,10 +135,11 @@ public class SoundsResource {
     /**
      * {@code GET  /sounds} : get all the sounds.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sounds in body.
      */
     @GetMapping("/sounds")
-    public List<SoundsDTO> getAllSounds() {
+    public List<SoundsDTO> getAllSounds(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Sounds");
         return soundsService.findAll();
     }

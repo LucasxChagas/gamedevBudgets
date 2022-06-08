@@ -26,6 +26,14 @@
   "name": "Sounds",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "budget",
+      "otherEntityRelationshipName": "sounds",
+      "relationshipName": "bugdet",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "service": "serviceClass"
 }

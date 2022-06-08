@@ -20,7 +20,8 @@
       "id": "ID",
       "name": "Name",
       "type": "Type",
-      "format": "Format"
+      "format": "Format",
+      "bugdet": "Bugdet"
     }
   }
 }

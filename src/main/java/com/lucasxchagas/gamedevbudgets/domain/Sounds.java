@@ -1,5 +1,6 @@
 package com.lucasxchagas.gamedevbudgets.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundFormats;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundTypes;
 import java.io.Serializable;
@@ -34,6 +35,10 @@ public class Sounds implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "format")
     private SoundFormats format;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "sounds", "payments", "game" }, allowSetters = true)
+    private Budget bugdet;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -87,6 +92,19 @@ public class Sounds implements Serializable {
 
     public void setFormat(SoundFormats format) {
         this.format = format;
+    }
+
+    public Budget getBugdet() {
+        return this.bugdet;
+    }
+
+    public void setBugdet(Budget budget) {
+        this.bugdet = budget;
+    }
+
+    public Sounds bugdet(Budget budget) {
+        this.setBugdet(budget);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

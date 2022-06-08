@@ -39,6 +39,18 @@
         </div>
 
         <div class="row mb-3">
+          <label jhiTranslate="gamedevBudgetsApp.budget.payment" for="field_payments">Payment</label>
+          <select class="form-control" id="field_payments" data-cy="payment" multiple name="payments" formControlName="payments">
+            <option
+              [ngValue]="getSelectedPayment(paymentOption, editForm.get('payments')!.value)"
+              *ngFor="let paymentOption of paymentsSharedCollection; trackBy: trackPaymentById"
+            >
+              {{ paymentOption.paymentType }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="gamedevBudgetsApp.budget.game" for="field_game">Game</label>
           <select class="form-control" id="field_game" data-cy="game" name="game" formControlName="game">
             <option [ngValue]="null"></option>

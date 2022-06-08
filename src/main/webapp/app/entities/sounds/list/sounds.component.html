@@ -36,6 +36,7 @@
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.name">Name</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.type">Type</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.format">Format</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.bugdet">Bugdet</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -47,6 +48,11 @@
           <td>{{ sounds.name }}</td>
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundTypes.' + sounds.type }}">{{ sounds.type }}</td>
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</td>
+          <td>
+            <div *ngIf="sounds.bugdet">
+              <a [routerLink]="['/budget', sounds.bugdet?.id, 'view']">{{ sounds.bugdet?.name }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/sounds', sounds.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

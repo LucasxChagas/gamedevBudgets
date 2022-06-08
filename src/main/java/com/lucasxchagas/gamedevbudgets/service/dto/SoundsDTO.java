@@ -20,6 +20,8 @@ public class SoundsDTO implements Serializable {
 
     private SoundFormats format;
 
+    private BudgetDTO bugdet;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +54,14 @@ public class SoundsDTO implements Serializable {
         this.format = format;
     }
 
+    public BudgetDTO getBugdet() {
+        return bugdet;
+    }
+
+    public void setBugdet(BudgetDTO bugdet) {
+        this.bugdet = bugdet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,6 +91,7 @@ public class SoundsDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
             ", format='" + getFormat() + "'" +
+            ", bugdet=" + getBugdet() +
             "}";
     }
 }
