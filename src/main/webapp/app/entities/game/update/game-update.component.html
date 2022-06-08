@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-game-heading" data-cy="GameCreateUpdateHeading" jhiTranslate="gamedevBudgetsApp.game.home.createOrEditLabel">
+        Create or edit a Game
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.game.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.game.thumbnail" for="field_thumbnail">Thumbnail</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('thumbnailContentType')!.value + ';base64,' + editForm.get('thumbnail')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('thumbnail')!.value"
+              alt="game image"
+            />
+            <div *ngIf="editForm.get('thumbnail')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('thumbnailContentType')!.value }}, {{ byteSize(editForm.get('thumbnail')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('thumbnail', 'thumbnailContentType', 'file_thumbnail')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_thumbnail"
+              data-cy="thumbnail"
+              (change)="setFileData($event, 'thumbnail', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="thumbnail" id="field_thumbnail" data-cy="thumbnail" formControlName="thumbnail" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="thumbnailContentType"
+            id="field_thumbnailContentType"
+            formControlName="thumbnailContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.game.description" for="field_description">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="gamedevBudgetsApp.game.gender" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'gamedevBudgetsApp.GameGender.null' | translate }}</option>
+            <option *ngFor="let gameGender of gameGenderValues" [value]="gameGender">
+              {{ 'gamedevBudgetsApp.GameGender.' + gameGender | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

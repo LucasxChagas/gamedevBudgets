@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20220608004602",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "budget",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Budget",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "game",
+      "otherEntityRelationshipName": "budgets",
+      "relationshipName": "game",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

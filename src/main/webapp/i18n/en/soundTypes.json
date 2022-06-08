@@ -1,0 +1,9 @@
+{
+  "gamedevBudgetsApp": {
+    "SoundTypes": {
+      "null": "",
+      "SoundTrack": "SoundTrack",
+      "SFX": "SFX"
+    }
+  }
+}
