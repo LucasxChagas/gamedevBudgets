@@ -64,9 +64,8 @@ relationship OneToMany
 
 relationship ManyToMany
 {
-	Sounds{Budget(name)} to Budget{Sounds(name)},
-    Payment{Budget(name)} to Budget{Payment(maymentType)},
-
+	Budget{Sounds(name)} to Sounds{Budget(name)},
+    Budget{Payment(maymentType)} to Payment{Budget(name)},
 }
 
 
