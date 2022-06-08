@@ -10,8 +10,6 @@ import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 
 import { IBudget, Budget } from '../budget.model';
 import { BudgetService } from '../service/budget.service';
-import { IPayment } from 'app/entities/payment/payment.model';
-import { PaymentService } from 'app/entities/payment/service/payment.service';
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
 
@@ -22,20 +20,17 @@ import { GameService } from 'app/entities/game/service/game.service';
 export class BudgetUpdateComponent implements OnInit {
   isSaving = false;
 
-  paymentsSharedCollection: IPayment[] = [];
   gamesSharedCollection: IGame[] = [];
 
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
     createdAt: [],
-    payments: [],
     game: [],
   });
 
   constructor(
     protected budgetService: BudgetService,
-    protected paymentService: PaymentService,
     protected gameService: GameService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -68,23 +63,8 @@ export class BudgetUpdateComponent implements OnInit {
     }
   }
 
-  trackPaymentById(_index: number, item: IPayment): number {
-    return item.id!;
-  }
-
   trackGameById(_index: number, item: IGame): number {
     return item.id!;
-  }
-
-  getSelectedPayment(option: IPayment, selectedVals?: IPayment[]): IPayment {
-    if (selectedVals) {
-      for (const selectedVal of selectedVals) {
-        if (option.id === selectedVal.id) {
-          return selectedVal;
-        }
-      }
-    }
-    return option;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IBudget>>): void {
@@ -111,28 +91,13 @@ export class BudgetUpdateComponent implements OnInit {
       id: budget.id,
       name: budget.name,
       createdAt: budget.createdAt ? budget.createdAt.format(DATE_TIME_FORMAT) : null,
-      payments: budget.payments,
       game: budget.game,
     });
 
-    this.paymentsSharedCollection = this.paymentService.addPaymentToCollectionIfMissing(
-      this.paymentsSharedCollection,
-      ...(budget.payments ?? [])
-    );
     this.gamesSharedCollection = this.gameService.addGameToCollectionIfMissing(this.gamesSharedCollection, budget.game);
   }
 
   protected loadRelationshipsOptions(): void {
-    this.paymentService
-      .query()
-      .pipe(map((res: HttpResponse<IPayment[]>) => res.body ?? []))
-      .pipe(
-        map((payments: IPayment[]) =>
-          this.paymentService.addPaymentToCollectionIfMissing(payments, ...(this.editForm.get('payments')!.value ?? []))
-        )
-      )
-      .subscribe((payments: IPayment[]) => (this.paymentsSharedCollection = payments));
-
     this.gameService
       .query()
       .pipe(map((res: HttpResponse<IGame[]>) => res.body ?? []))
@@ -146,7 +111,6 @@ export class BudgetUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       createdAt: this.editForm.get(['createdAt'])!.value ? dayjs(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
-      payments: this.editForm.get(['payments'])!.value,
       game: this.editForm.get(['game'])!.value,
     };
   }

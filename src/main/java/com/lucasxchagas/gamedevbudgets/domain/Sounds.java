@@ -37,7 +37,7 @@ public class Sounds implements Serializable {
     private SoundFormats format;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "sounds", "payments", "game" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sounds", "game" }, allowSetters = true)
     private Budget bugdet;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
