@@ -20,7 +20,7 @@ public class BudgetRepositoryWithBagRelationshipsImpl implements BudgetRepositor
 
     @Override
     public Optional<Budget> fetchBagRelationships(Optional<Budget> budget) {
-        return budget.map(this::fetchPayments);
+        return budget.map(this::fetchSounds);
     }
 
     @Override
@@ -30,20 +30,20 @@ public class BudgetRepositoryWithBagRelationshipsImpl implements BudgetRepositor
 
     @Override
     public List<Budget> fetchBagRelationships(List<Budget> budgets) {
-        return Optional.of(budgets).map(this::fetchPayments).orElse(Collections.emptyList());
+        return Optional.of(budgets).map(this::fetchSounds).orElse(Collections.emptyList());
     }
 
-    Budget fetchPayments(Budget result) {
+    Budget fetchSounds(Budget result) {
         return entityManager
-            .createQuery("select budget from Budget budget left join fetch budget.payments where budget is :budget", Budget.class)
+            .createQuery("select budget from Budget budget left join fetch budget.sounds where budget is :budget", Budget.class)
             .setParameter("budget", result)
             .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
             .getSingleResult();
     }
 
-    List<Budget> fetchPayments(List<Budget> budgets) {
+    List<Budget> fetchSounds(List<Budget> budgets) {
         return entityManager
-            .createQuery("select distinct budget from Budget budget left join fetch budget.payments where budget in :budgets", Budget.class)
+            .createQuery("select distinct budget from Budget budget left join fetch budget.sounds where budget in :budgets", Budget.class)
             .setParameter("budgets", budgets)
             .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
             .getResultList();

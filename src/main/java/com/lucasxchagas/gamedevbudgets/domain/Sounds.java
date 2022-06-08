@@ -44,8 +44,22 @@ public class Sounds implements Serializable {
         joinColumns = @JoinColumn(name = "sounds_id"),
         inverseJoinColumns = @JoinColumn(name = "budget_id")
     )
+    @ManyToMany(mappedBy = "sounds")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "game", "sounds", "payments" }, allowSetters = true)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "sounds", "game", "sounds", "payments" }, allowSetters = true)
+    private Set<Budget> budgets = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_sounds__budget",
+        joinColumns = @JoinColumn(name = "sounds_id"),
+        inverseJoinColumns = @JoinColumn(name = "budget_id")
+    )
+    @ManyToMany(mappedBy = "sounds")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "sounds", "game", "sounds", "payments" }, allowSetters = true)
     private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -107,6 +121,37 @@ public class Sounds implements Serializable {
     }
 
     public void setBudgets(Set<Budget> budgets) {
+        this.budgets = budgets;
+    }
+
+    public Sounds budgets(Set<Budget> budgets) {
+        this.setBudgets(budgets);
+        return this;
+    }
+
+    public Sounds addBudget(Budget budget) {
+        this.budgets.add(budget);
+        budget.getSounds().add(this);
+        return this;
+    }
+
+    public Sounds removeBudget(Budget budget) {
+        this.budgets.remove(budget);
+        budget.getSounds().remove(this);
+        return this;
+    }
+
+    public Set<Budget> getBudgets() {
+        return this.budgets;
+    }
+
+    public void setBudgets(Set<Budget> budgets) {
+        if (this.budgets != null) {
+            this.budgets.forEach(i -> i.removeSounds(this));
+        }
+        if (budgets != null) {
+            budgets.forEach(i -> i.addSounds(this));
+        }
         this.budgets = budgets;
     }
 

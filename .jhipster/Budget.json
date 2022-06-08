@@ -23,12 +23,21 @@
   "relationships": [
     {
       "otherEntityField": "name",
+      "otherEntityName": "sounds",
+      "otherEntityRelationshipName": "budget",
+      "ownerSide": true,
+      "relationshipName": "sounds",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "name",
       "otherEntityName": "game",
       "otherEntityRelationshipName": "budgets",
       "relationshipName": "game",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "sounds",
       "otherEntityRelationshipName": "budget",
       "ownerSide": false,
