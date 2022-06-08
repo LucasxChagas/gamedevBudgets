@@ -18,10 +18,10 @@
         <dd>
           <span>{{ payment.paymentType }}</span>
         </dd>
-        <dt><span jhiTranslate="gamedevBudgetsApp.payment.payment">Payment</span></dt>
+        <dt><span jhiTranslate="gamedevBudgetsApp.payment.budget">Budget</span></dt>
         <dd>
-          <div *ngIf="payment.payment">
-            <a [routerLink]="['/budget', payment.payment?.id, 'view']">{{ payment.payment?.id }}</a>
+          <div *ngIf="payment.budget">
+            <a [routerLink]="['/budget', payment.budget?.id, 'view']">{{ payment.budget?.id }}</a>
           </div>
         </dd>
       </dl>

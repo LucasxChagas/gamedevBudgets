@@ -26,10 +26,10 @@
         <dd>
           <span jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</span>
         </dd>
-        <dt><span jhiTranslate="gamedevBudgetsApp.sounds.sounds">Sounds</span></dt>
+        <dt><span jhiTranslate="gamedevBudgetsApp.sounds.budget">Budget</span></dt>
         <dd>
-          <div *ngIf="sounds.sounds">
-            <a [routerLink]="['/budget', sounds.sounds?.id, 'view']">{{ sounds.sounds?.id }}</a>
+          <div *ngIf="sounds.budget">
+            <a [routerLink]="['/budget', sounds.budget?.id, 'view']">{{ sounds.budget?.id }}</a>
           </div>
         </dd>
       </dl>

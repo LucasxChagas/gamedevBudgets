@@ -28,7 +28,7 @@ public class Payment implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
-    private Budget payment;
+    private Budget budget;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -58,16 +58,16 @@ public class Payment implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public Budget getPayment() {
-        return this.payment;
+    public Budget getBudget() {
+        return this.budget;
     }
 
-    public void setPayment(Budget budget) {
-        this.payment = budget;
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 
-    public Payment payment(Budget budget) {
-        this.setPayment(budget);
+    public Payment budget(Budget budget) {
+        this.setBudget(budget);
         return this;
     }
 

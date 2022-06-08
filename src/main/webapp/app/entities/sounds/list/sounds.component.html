@@ -36,7 +36,7 @@
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.name">Name</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.type">Type</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.format">Format</span></th>
-          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.sounds">Sounds</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.sounds.budget">Budget</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -49,8 +49,8 @@
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundTypes.' + sounds.type }}">{{ sounds.type }}</td>
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</td>
           <td>
-            <div *ngIf="sounds.sounds">
-              <a [routerLink]="['/budget', sounds.sounds?.id, 'view']">{{ sounds.sounds?.id }}</a>
+            <div *ngIf="sounds.budget">
+              <a [routerLink]="['/budget', sounds.budget?.id, 'view']">{{ sounds.budget?.id }}</a>
             </div>
           </td>
           <td class="text-end">

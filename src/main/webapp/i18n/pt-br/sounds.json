@@ -21,7 +21,7 @@
       "name": "Name",
       "type": "Type",
       "format": "Format",
-      "sounds": "Sounds"
+      "budget": "Budget"
     }
   }
 }
