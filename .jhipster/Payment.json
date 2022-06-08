@@ -21,7 +21,7 @@
       "otherEntityField": "name",
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "payment",
-      "ownerSide": true,
+      "ownerSide": false,
       "relationshipName": "budget",
       "relationshipType": "many-to-many"
     }

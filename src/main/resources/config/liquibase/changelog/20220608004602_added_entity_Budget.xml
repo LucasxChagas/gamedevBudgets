@@ -40,6 +40,17 @@
         </createTable>
 
         <addPrimaryKey columnNames="budget_id, sounds_id" tableName="rel_budget__sounds"/>
+
+        <createTable tableName="rel_budget__payment">
+            <column name="payment_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="budget_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="budget_id, payment_id" tableName="rel_budget__payment"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

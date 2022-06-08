@@ -135,11 +135,10 @@ public class PaymentResource {
     /**
      * {@code GET  /payments} : get all the payments.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of payments in body.
      */
     @GetMapping("/payments")
-    public List<PaymentDTO> getAllPayments(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<PaymentDTO> getAllPayments() {
         log.debug("REST request to get all Payments");
         return paymentService.findAll();
     }

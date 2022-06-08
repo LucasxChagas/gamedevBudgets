@@ -36,6 +36,7 @@
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.name">Name</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.createdAt">Created At</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.sounds">Sounds</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.payment">Payment</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.game">Game</span></th>
           <th scope="col"></th>
         </tr>
@@ -50,6 +51,12 @@
           <td>
             <span *ngFor="let sounds of budget.sounds; let last = last">
               <a class="form-control-static" [routerLink]="['/sounds', sounds.id, 'view']">{{ sounds.name }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
+          <td>
+            <span *ngFor="let payment of budget.payments; let last = last">
+              <a class="form-control-static" [routerLink]="['/payment', payment.id, 'view']">{{ payment.paymentType }}</a
               >{{ last ? '' : ', ' }}
             </span>
           </td>

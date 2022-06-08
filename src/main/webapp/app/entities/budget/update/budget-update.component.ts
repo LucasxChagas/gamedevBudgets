@@ -12,6 +12,8 @@ import { IBudget, Budget } from '../budget.model';
 import { BudgetService } from '../service/budget.service';
 import { ISounds } from 'app/entities/sounds/sounds.model';
 import { SoundsService } from 'app/entities/sounds/service/sounds.service';
+import { IPayment } from 'app/entities/payment/payment.model';
+import { PaymentService } from 'app/entities/payment/service/payment.service';
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
 
@@ -23,6 +25,7 @@ export class BudgetUpdateComponent implements OnInit {
   isSaving = false;
 
   soundsSharedCollection: ISounds[] = [];
+  paymentsSharedCollection: IPayment[] = [];
   gamesSharedCollection: IGame[] = [];
 
   editForm = this.fb.group({
@@ -30,12 +33,14 @@ export class BudgetUpdateComponent implements OnInit {
     name: [null, [Validators.required]],
     createdAt: [],
     sounds: [],
+    payments: [],
     game: [],
   });
 
   constructor(
     protected budgetService: BudgetService,
     protected soundsService: SoundsService,
+    protected paymentService: PaymentService,
     protected gameService: GameService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -72,11 +77,26 @@ export class BudgetUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  trackPaymentById(_index: number, item: IPayment): number {
+    return item.id!;
+  }
+
   trackGameById(_index: number, item: IGame): number {
     return item.id!;
   }
 
   getSelectedSounds(option: ISounds, selectedVals?: ISounds[]): ISounds {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
+
+  getSelectedPayment(option: IPayment, selectedVals?: IPayment[]): IPayment {
     if (selectedVals) {
       for (const selectedVal of selectedVals) {
         if (option.id === selectedVal.id) {
@@ -112,10 +132,15 @@ export class BudgetUpdateComponent implements OnInit {
       name: budget.name,
       createdAt: budget.createdAt ? budget.createdAt.format(DATE_TIME_FORMAT) : null,
       sounds: budget.sounds,
+      payments: budget.payments,
       game: budget.game,
     });
 
     this.soundsSharedCollection = this.soundsService.addSoundsToCollectionIfMissing(this.soundsSharedCollection, ...(budget.sounds ?? []));
+    this.paymentsSharedCollection = this.paymentService.addPaymentToCollectionIfMissing(
+      this.paymentsSharedCollection,
+      ...(budget.payments ?? [])
+    );
     this.gamesSharedCollection = this.gameService.addGameToCollectionIfMissing(this.gamesSharedCollection, budget.game);
   }
 
@@ -127,6 +152,16 @@ export class BudgetUpdateComponent implements OnInit {
         map((sounds: ISounds[]) => this.soundsService.addSoundsToCollectionIfMissing(sounds, ...(this.editForm.get('sounds')!.value ?? [])))
       )
       .subscribe((sounds: ISounds[]) => (this.soundsSharedCollection = sounds));
+
+    this.paymentService
+      .query()
+      .pipe(map((res: HttpResponse<IPayment[]>) => res.body ?? []))
+      .pipe(
+        map((payments: IPayment[]) =>
+          this.paymentService.addPaymentToCollectionIfMissing(payments, ...(this.editForm.get('payments')!.value ?? []))
+        )
+      )
+      .subscribe((payments: IPayment[]) => (this.paymentsSharedCollection = payments));
 
     this.gameService
       .query()
@@ -142,6 +177,7 @@ export class BudgetUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       createdAt: this.editForm.get(['createdAt'])!.value ? dayjs(this.editForm.get(['createdAt'])!.value, DATE_TIME_FORMAT) : undefined,
       sounds: this.editForm.get(['sounds'])!.value,
+      payments: this.editForm.get(['payments'])!.value,
       game: this.editForm.get(['game'])!.value,
     };
   }

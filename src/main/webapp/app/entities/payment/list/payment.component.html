@@ -34,7 +34,6 @@
         <tr>
           <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
           <th scope="col"><span jhiTranslate="gamedevBudgetsApp.payment.paymentType">Payment Type</span></th>
-          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.payment.budget">Budget</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -44,12 +43,6 @@
             <a [routerLink]="['/payment', payment.id, 'view']">{{ payment.id }}</a>
           </td>
           <td>{{ payment.paymentType }}</td>
-          <td>
-            <span *ngFor="let budget of payment.budgets; let last = last">
-              <a class="form-control-static" [routerLink]="['/budget', budget.id, 'view']">{{ budget.name }}</a
-              >{{ last ? '' : ', ' }}
-            </span>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
