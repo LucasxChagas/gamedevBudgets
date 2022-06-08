@@ -27,20 +27,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20220608004604-1-relations" author="jhipster">
-
-        <createTable tableName="rel_sounds__budget">
-            <column name="budget_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="sounds_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="sounds_id, budget_id" tableName="rel_sounds__budget"/>
-    </changeSet>
-
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

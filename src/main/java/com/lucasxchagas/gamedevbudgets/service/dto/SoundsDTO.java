@@ -3,9 +3,7 @@ package com.lucasxchagas.gamedevbudgets.service.dto;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundFormats;
 import com.lucasxchagas.gamedevbudgets.domain.enumeration.SoundTypes;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -21,8 +19,6 @@ public class SoundsDTO implements Serializable {
     private SoundTypes type;
 
     private SoundFormats format;
-
-    private Set<BudgetDTO> budgets = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -56,14 +52,6 @@ public class SoundsDTO implements Serializable {
         this.format = format;
     }
 
-    public Set<BudgetDTO> getBudgets() {
-        return budgets;
-    }
-
-    public void setBudgets(Set<BudgetDTO> budgets) {
-        this.budgets = budgets;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,7 +81,6 @@ public class SoundsDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
             ", format='" + getFormat() + "'" +
-            ", budgets=" + getBudgets() +
             "}";
     }
 }
