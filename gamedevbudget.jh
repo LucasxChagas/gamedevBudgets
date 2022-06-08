@@ -60,15 +60,12 @@ enum GamePlatform {
 relationship OneToMany
 {
 	Game{budgets(name)} to Budget{game(name)},
-    Budget{sounds(name)} to Sounds{bugdet(name)}
 }
 
 relationship ManyToMany
 {
-    Budget{payment(paymentType)} to Payment{budget}
+    Budget{sounds(sounds)} to Sounds{bugdet}
 }
-
-
 
 // Set pagination options
 paginate Game with pagination
