@@ -9,7 +9,6 @@ export interface IBudget {
   createdAt?: dayjs.Dayjs | null;
   sounds?: ISounds[] | null;
   game?: IGame | null;
-  sounds?: ISounds[] | null;
   payments?: IPayment[] | null;
 }
 
@@ -20,7 +19,6 @@ export class Budget implements IBudget {
     public createdAt?: dayjs.Dayjs | null,
     public sounds?: ISounds[] | null,
     public game?: IGame | null,
-    public sounds?: ISounds[] | null,
     public payments?: IPayment[] | null
   ) {}
 }

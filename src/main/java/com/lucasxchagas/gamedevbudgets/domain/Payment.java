@@ -35,7 +35,7 @@ public class Payment implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "budget_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sounds", "game", "sounds", "payments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sounds", "game", "payments" }, allowSetters = true)
     private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

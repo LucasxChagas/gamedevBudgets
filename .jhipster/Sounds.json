@@ -31,14 +31,6 @@
       "otherEntityField": "name",
       "otherEntityName": "budget",
       "otherEntityRelationshipName": "sounds",
-      "ownerSide": true,
-      "relationshipName": "budget",
-      "relationshipType": "many-to-many"
-    },
-    {
-      "otherEntityField": "name",
-      "otherEntityName": "budget",
-      "otherEntityRelationshipName": "sounds",
       "ownerSide": false,
       "relationshipName": "budget",
       "relationshipType": "many-to-many"

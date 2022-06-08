@@ -37,14 +37,6 @@
       "relationshipType": "many-to-one"
     },
     {
-      "otherEntityField": "name",
-      "otherEntityName": "sounds",
-      "otherEntityRelationshipName": "budget",
-      "ownerSide": false,
-      "relationshipName": "sounds",
-      "relationshipType": "many-to-many"
-    },
-    {
       "otherEntityName": "payment",
       "otherEntityRelationshipName": "budget",
       "ownerSide": false,

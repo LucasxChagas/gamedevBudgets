@@ -26,13 +26,6 @@
         <dd>
           <span jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</span>
         </dd>
-        <dt><span jhiTranslate="gamedevBudgetsApp.sounds.budget">Budget</span></dt>
-        <dd>
-          <span *ngFor="let budget of sounds.budgets; let last = last">
-            <a [routerLink]="['/budget', budget?.id, 'view']">{{ budget.name }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
