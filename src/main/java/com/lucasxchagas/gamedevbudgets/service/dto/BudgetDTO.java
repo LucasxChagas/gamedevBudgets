@@ -21,6 +21,8 @@ public class BudgetDTO implements Serializable {
 
     private Set<SoundsDTO> sounds = new HashSet<>();
 
+    private Set<PaymentDTO> payments = new HashSet<>();
+
     private GameDTO game;
 
     public Long getId() {
@@ -53,6 +55,14 @@ public class BudgetDTO implements Serializable {
 
     public void setSounds(Set<SoundsDTO> sounds) {
         this.sounds = sounds;
+    }
+
+    public Set<PaymentDTO> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<PaymentDTO> payments) {
+        this.payments = payments;
     }
 
     public GameDTO getGame() {
@@ -92,6 +102,7 @@ public class BudgetDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", sounds=" + getSounds() +
+            ", payments=" + getPayments() +
             ", game=" + getGame() +
             "}";
     }

@@ -1,15 +1,15 @@
 import dayjs from 'dayjs/esm';
 import { ISounds } from 'app/entities/sounds/sounds.model';
-import { IGame } from 'app/entities/game/game.model';
 import { IPayment } from 'app/entities/payment/payment.model';
+import { IGame } from 'app/entities/game/game.model';
 
 export interface IBudget {
   id?: number;
   name?: string;
   createdAt?: dayjs.Dayjs | null;
   sounds?: ISounds[] | null;
-  game?: IGame | null;
   payments?: IPayment[] | null;
+  game?: IGame | null;
 }
 
 export class Budget implements IBudget {
@@ -18,8 +18,8 @@ export class Budget implements IBudget {
     public name?: string,
     public createdAt?: dayjs.Dayjs | null,
     public sounds?: ISounds[] | null,
-    public game?: IGame | null,
-    public payments?: IPayment[] | null
+    public payments?: IPayment[] | null,
+    public game?: IGame | null
   ) {}
 }
 

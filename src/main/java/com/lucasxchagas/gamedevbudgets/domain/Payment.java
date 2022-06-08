@@ -28,14 +28,9 @@ public class Payment implements Serializable {
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_payment__budget",
-        joinColumns = @JoinColumn(name = "payment_id"),
-        inverseJoinColumns = @JoinColumn(name = "budget_id")
-    )
+    @ManyToMany(mappedBy = "payments")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sounds", "game", "payments" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "sounds", "payments", "game" }, allowSetters = true)
     private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -71,6 +66,12 @@ public class Payment implements Serializable {
     }
 
     public void setBudgets(Set<Budget> budgets) {
+        if (this.budgets != null) {
+            this.budgets.forEach(i -> i.removePayment(this));
+        }
+        if (budgets != null) {
+            budgets.forEach(i -> i.addPayment(this));
+        }
         this.budgets = budgets;
     }
 

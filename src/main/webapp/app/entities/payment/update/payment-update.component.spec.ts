@@ -8,8 +8,6 @@ import { of, Subject, from } from 'rxjs';
 
 import { PaymentService } from '../service/payment.service';
 import { IPayment, Payment } from '../payment.model';
-import { IBudget } from 'app/entities/budget/budget.model';
-import { BudgetService } from 'app/entities/budget/service/budget.service';
 
 import { PaymentUpdateComponent } from './payment-update.component';
 
@@ -18,7 +16,6 @@ describe('Payment Management Update Component', () => {
   let fixture: ComponentFixture<PaymentUpdateComponent>;
   let activatedRoute: ActivatedRoute;
   let paymentService: PaymentService;
-  let budgetService: BudgetService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,41 +37,18 @@ describe('Payment Management Update Component', () => {
     fixture = TestBed.createComponent(PaymentUpdateComponent);
     activatedRoute = TestBed.inject(ActivatedRoute);
     paymentService = TestBed.inject(PaymentService);
-    budgetService = TestBed.inject(BudgetService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Budget query and add missing value', () => {
-      const payment: IPayment = { id: 456 };
-      const budgets: IBudget[] = [{ id: 26293 }];
-      payment.budgets = budgets;
-
-      const budgetCollection: IBudget[] = [{ id: 38648 }];
-      jest.spyOn(budgetService, 'query').mockReturnValue(of(new HttpResponse({ body: budgetCollection })));
-      const additionalBudgets = [...budgets];
-      const expectedCollection: IBudget[] = [...additionalBudgets, ...budgetCollection];
-      jest.spyOn(budgetService, 'addBudgetToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ payment });
-      comp.ngOnInit();
-
-      expect(budgetService.query).toHaveBeenCalled();
-      expect(budgetService.addBudgetToCollectionIfMissing).toHaveBeenCalledWith(budgetCollection, ...additionalBudgets);
-      expect(comp.budgetsSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const payment: IPayment = { id: 456 };
-      const budgets: IBudget = { id: 18588 };
-      payment.budgets = [budgets];
 
       activatedRoute.data = of({ payment });
       comp.ngOnInit();
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(payment));
-      expect(comp.budgetsSharedCollection).toContain(budgets);
     });
   });
 
@@ -139,44 +113,6 @@ describe('Payment Management Update Component', () => {
       expect(paymentService.update).toHaveBeenCalledWith(payment);
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Tracking relationships identifiers', () => {
-    describe('trackBudgetById', () => {
-      it('Should return tracked Budget primary key', () => {
-        const entity = { id: 123 };
-        const trackResult = comp.trackBudgetById(0, entity);
-        expect(trackResult).toEqual(entity.id);
-      });
-    });
-  });
-
-  describe('Getting selected relationships', () => {
-    describe('getSelectedBudget', () => {
-      it('Should return option if no Budget is selected', () => {
-        const option = { id: 123 };
-        const result = comp.getSelectedBudget(option);
-        expect(result === option).toEqual(true);
-      });
-
-      it('Should return selected Budget for according option', () => {
-        const option = { id: 123 };
-        const selected = { id: 123 };
-        const selected2 = { id: 456 };
-        const result = comp.getSelectedBudget(option, [selected2, selected]);
-        expect(result === selected).toEqual(true);
-        expect(result === selected2).toEqual(false);
-        expect(result === option).toEqual(false);
-      });
-
-      it('Should return option if this Budget is not selected', () => {
-        const option = { id: 123 };
-        const selected = { id: 456 };
-        const result = comp.getSelectedBudget(option, [selected]);
-        expect(result === option).toEqual(true);
-        expect(result === selected).toEqual(false);
-      });
     });
   });
 });

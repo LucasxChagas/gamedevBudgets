@@ -20,6 +20,18 @@
                                  referencedColumnNames="id"
                                  referencedTableName="sounds"/>
 
+        <addForeignKeyConstraint baseColumnNames="budget_id"
+                                 baseTableName="rel_budget__payment"
+                                 constraintName="fk_rel_budget__payment__budget_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="budget"/>
+
+        <addForeignKeyConstraint baseColumnNames="payment_id"
+                                 baseTableName="rel_budget__payment"
+                                 constraintName="fk_rel_budget__payment__payment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="payment"/>
+
         <addForeignKeyConstraint baseColumnNames="game_id"
                                  baseTableName="budget"
                                  constraintName="fk_budget__game_id"

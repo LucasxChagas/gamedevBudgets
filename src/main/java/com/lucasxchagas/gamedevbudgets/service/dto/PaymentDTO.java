@@ -1,9 +1,7 @@
 package com.lucasxchagas.gamedevbudgets.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -15,8 +13,6 @@ public class PaymentDTO implements Serializable {
 
     @NotNull
     private String paymentType;
-
-    private Set<BudgetDTO> budgets = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -32,14 +28,6 @@ public class PaymentDTO implements Serializable {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
-    }
-
-    public Set<BudgetDTO> getBudgets() {
-        return budgets;
-    }
-
-    public void setBudgets(Set<BudgetDTO> budgets) {
-        this.budgets = budgets;
     }
 
     @Override
@@ -69,7 +57,6 @@ public class PaymentDTO implements Serializable {
         return "PaymentDTO{" +
             "id=" + getId() +
             ", paymentType='" + getPaymentType() + "'" +
-            ", budgets=" + getBudgets() +
             "}";
     }
 }

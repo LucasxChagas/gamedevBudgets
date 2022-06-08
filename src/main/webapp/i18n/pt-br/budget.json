@@ -21,8 +21,8 @@
       "name": "Name",
       "createdAt": "Created At",
       "sounds": "Sounds",
-      "game": "Game",
-      "payment": "Payment"
+      "payment": "Payment",
+      "game": "Game"
     }
   }
 }

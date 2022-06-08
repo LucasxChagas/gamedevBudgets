@@ -10,6 +10,8 @@ import { BudgetService } from '../service/budget.service';
 import { IBudget, Budget } from '../budget.model';
 import { ISounds } from 'app/entities/sounds/sounds.model';
 import { SoundsService } from 'app/entities/sounds/service/sounds.service';
+import { IPayment } from 'app/entities/payment/payment.model';
+import { PaymentService } from 'app/entities/payment/service/payment.service';
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
 
@@ -21,6 +23,7 @@ describe('Budget Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let budgetService: BudgetService;
   let soundsService: SoundsService;
+  let paymentService: PaymentService;
   let gameService: GameService;
 
   beforeEach(() => {
@@ -44,6 +47,7 @@ describe('Budget Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     budgetService = TestBed.inject(BudgetService);
     soundsService = TestBed.inject(SoundsService);
+    paymentService = TestBed.inject(PaymentService);
     gameService = TestBed.inject(GameService);
 
     comp = fixture.componentInstance;
@@ -69,6 +73,25 @@ describe('Budget Management Update Component', () => {
       expect(comp.soundsSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Payment query and add missing value', () => {
+      const budget: IBudget = { id: 456 };
+      const payments: IPayment[] = [{ id: 2712 }];
+      budget.payments = payments;
+
+      const paymentCollection: IPayment[] = [{ id: 24363 }];
+      jest.spyOn(paymentService, 'query').mockReturnValue(of(new HttpResponse({ body: paymentCollection })));
+      const additionalPayments = [...payments];
+      const expectedCollection: IPayment[] = [...additionalPayments, ...paymentCollection];
+      jest.spyOn(paymentService, 'addPaymentToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ budget });
+      comp.ngOnInit();
+
+      expect(paymentService.query).toHaveBeenCalled();
+      expect(paymentService.addPaymentToCollectionIfMissing).toHaveBeenCalledWith(paymentCollection, ...additionalPayments);
+      expect(comp.paymentsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should call Game query and add missing value', () => {
       const budget: IBudget = { id: 456 };
       const game: IGame = { id: 16763 };
@@ -92,6 +115,8 @@ describe('Budget Management Update Component', () => {
       const budget: IBudget = { id: 456 };
       const sounds: ISounds = { id: 75448 };
       budget.sounds = [sounds];
+      const payments: IPayment = { id: 88289 };
+      budget.payments = [payments];
       const game: IGame = { id: 75387 };
       budget.game = game;
 
@@ -100,6 +125,7 @@ describe('Budget Management Update Component', () => {
 
       expect(comp.editForm.value).toEqual(expect.objectContaining(budget));
       expect(comp.soundsSharedCollection).toContain(sounds);
+      expect(comp.paymentsSharedCollection).toContain(payments);
       expect(comp.gamesSharedCollection).toContain(game);
     });
   });
@@ -177,6 +203,14 @@ describe('Budget Management Update Component', () => {
       });
     });
 
+    describe('trackPaymentById', () => {
+      it('Should return tracked Payment primary key', () => {
+        const entity = { id: 123 };
+        const trackResult = comp.trackPaymentById(0, entity);
+        expect(trackResult).toEqual(entity.id);
+      });
+    });
+
     describe('trackGameById', () => {
       it('Should return tracked Game primary key', () => {
         const entity = { id: 123 };
@@ -208,6 +242,32 @@ describe('Budget Management Update Component', () => {
         const option = { id: 123 };
         const selected = { id: 456 };
         const result = comp.getSelectedSounds(option, [selected]);
+        expect(result === option).toEqual(true);
+        expect(result === selected).toEqual(false);
+      });
+    });
+
+    describe('getSelectedPayment', () => {
+      it('Should return option if no Payment is selected', () => {
+        const option = { id: 123 };
+        const result = comp.getSelectedPayment(option);
+        expect(result === option).toEqual(true);
+      });
+
+      it('Should return selected Payment for according option', () => {
+        const option = { id: 123 };
+        const selected = { id: 123 };
+        const selected2 = { id: 456 };
+        const result = comp.getSelectedPayment(option, [selected2, selected]);
+        expect(result === selected).toEqual(true);
+        expect(result === selected2).toEqual(false);
+        expect(result === option).toEqual(false);
+      });
+
+      it('Should return option if this Payment is not selected', () => {
+        const option = { id: 123 };
+        const selected = { id: 456 };
+        const result = comp.getSelectedPayment(option, [selected]);
         expect(result === option).toEqual(true);
         expect(result === selected).toEqual(false);
       });

@@ -42,14 +42,19 @@ public class Budget implements Serializable {
     @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
     private Set<Sounds> sounds = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
-    private Game game;
-
-    @ManyToMany(mappedBy = "budgets")
+    @ManyToMany
+    @JoinTable(
+        name = "rel_budget__payment",
+        joinColumns = @JoinColumn(name = "budget_id"),
+        inverseJoinColumns = @JoinColumn(name = "payment_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
     private Set<Payment> payments = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "budgets" }, allowSetters = true)
+    private Game game;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -117,30 +122,11 @@ public class Budget implements Serializable {
         return this;
     }
 
-    public Game getGame() {
-        return this.game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public Budget game(Game game) {
-        this.setGame(game);
-        return this;
-    }
-
     public Set<Payment> getPayments() {
         return this.payments;
     }
 
     public void setPayments(Set<Payment> payments) {
-        if (this.payments != null) {
-            this.payments.forEach(i -> i.removeBudget(this));
-        }
-        if (payments != null) {
-            payments.forEach(i -> i.addBudget(this));
-        }
         this.payments = payments;
     }
 
@@ -158,6 +144,19 @@ public class Budget implements Serializable {
     public Budget removePayment(Payment payment) {
         this.payments.remove(payment);
         payment.getBudgets().remove(this);
+        return this;
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Budget game(Game game) {
+        this.setGame(game);
         return this;
     }
 

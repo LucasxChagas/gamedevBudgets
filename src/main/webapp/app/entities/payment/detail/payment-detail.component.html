@@ -18,13 +18,6 @@
         <dd>
           <span>{{ payment.paymentType }}</span>
         </dd>
-        <dt><span jhiTranslate="gamedevBudgetsApp.payment.budget">Budget</span></dt>
-        <dd>
-          <span *ngFor="let budget of payment.budgets; let last = last">
-            <a [routerLink]="['/budget', budget?.id, 'view']">{{ budget.name }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -30,18 +30,19 @@
       "relationshipType": "many-to-many"
     },
     {
+      "otherEntityField": "paymentType",
+      "otherEntityName": "payment",
+      "otherEntityRelationshipName": "budget",
+      "ownerSide": true,
+      "relationshipName": "payment",
+      "relationshipType": "many-to-many"
+    },
+    {
       "otherEntityField": "name",
       "otherEntityName": "game",
       "otherEntityRelationshipName": "budgets",
       "relationshipName": "game",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "payment",
-      "otherEntityRelationshipName": "budget",
-      "ownerSide": false,
-      "relationshipName": "payment",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"
