@@ -48,6 +48,11 @@ public class CacheConfiguration {
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.User.class.getName());
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Authority.class.getName());
             createCache(cm, com.lucasxchagas.gamedevbudgets.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Game.class.getName());
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Game.class.getName() + ".budgets");
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Budget.class.getName());
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Payment.class.getName());
+            createCache(cm, com.lucasxchagas.gamedevbudgets.domain.Sounds.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

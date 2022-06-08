@@ -1,0 +1,26 @@
+{
+  "gamedevBudgetsApp": {
+    "sounds": {
+      "home": {
+        "title": "Sounds",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Sounds",
+        "createOrEditLabel": "Criar ou editar Sounds",
+        "notFound": "Nenhum Sounds encontrado"
+      },
+      "created": "Um novo Sounds foi criado com o identificador {{ param }}",
+      "updated": "Um Sounds foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Sounds foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Sounds {{ id }}?"
+      },
+      "detail": {
+        "title": "Sounds"
+      },
+      "id": "ID",
+      "name": "Name",
+      "type": "Type",
+      "format": "Format"
+    }
+  }
+}

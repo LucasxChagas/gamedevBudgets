@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20220608004601",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "game",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "thumbnail",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "GameGender",
+      "fieldValues": "Fighting,Racing,Platformer2D,Platformer3D,FPS,RTS,TPS"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "The Employee entity.",
+  "jpaMetamodelFiltering": false,
+  "name": "Game",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "budget",
+      "otherEntityRelationshipName": "game",
+      "relationshipName": "budgets",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

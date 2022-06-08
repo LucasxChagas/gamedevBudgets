@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20220608004604",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sounds",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "SoundTypes",
+      "fieldValues": "SoundTrack,SFX"
+    },
+    {
+      "fieldName": "format",
+      "fieldType": "SoundFormats",
+      "fieldValues": "MP3,OGG,WAV"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Sounds",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

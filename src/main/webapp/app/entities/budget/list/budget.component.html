@@ -1,0 +1,76 @@
+<div>
+  <h2 id="page-heading" data-cy="BudgetHeading">
+    <span jhiTranslate="gamedevBudgetsApp.budget.home.title">Budgets</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="gamedevBudgetsApp.budget.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-budget"
+        [routerLink]="['/budget/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="gamedevBudgetsApp.budget.home.createLabel"> Create a new Budget </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="budgets?.length === 0">
+    <span jhiTranslate="gamedevBudgetsApp.budget.home.notFound">No budgets found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="budgets && budgets.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.name">Name</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.createdAt">Created At</span></th>
+          <th scope="col"><span jhiTranslate="gamedevBudgetsApp.budget.game">Game</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let budget of budgets; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/budget', budget.id, 'view']">{{ budget.id }}</a>
+          </td>
+          <td>{{ budget.name }}</td>
+          <td>{{ budget.createdAt | formatMediumDatetime }}</td>
+          <td>
+            <div *ngIf="budget.game">
+              <a [routerLink]="['/game', budget.game?.id, 'view']">{{ budget.game?.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/budget', budget.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/budget', budget.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(budget)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
