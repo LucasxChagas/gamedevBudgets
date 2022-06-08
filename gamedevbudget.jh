@@ -64,8 +64,8 @@ relationship OneToMany
 
 relationship ManyToOne
 {
-	Sounds{sounds} to Budget,
-    Payment{payment} to Budget,
+	Sounds{Budget} to Budget,
+    Payment{Budget} to Budget,
 
 }
 
