@@ -13,17 +13,17 @@ import org.springframework.stereotype.Repository;
  * Spring Data SQL repository for the Budget entity.
  */
 @Repository
-public interface BudgetRepository extends BudgetRepositoryWithBagRelationships, JpaRepository<Budget, Long> {
+public interface BudgetRepository extends JpaRepository<Budget, Long> {
     default Optional<Budget> findOneWithEagerRelationships(Long id) {
-        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
+        return this.findOneWithToOneRelationships(id);
     }
 
     default List<Budget> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
+        return this.findAllWithToOneRelationships();
     }
 
     default Page<Budget> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
+        return this.findAllWithToOneRelationships(pageable);
     }
 
     @Query(

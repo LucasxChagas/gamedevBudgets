@@ -28,20 +28,6 @@
         <dropDefaultValue tableName="budget" columnName="created_at" columnDataType="${datetimeType}"/>
     </changeSet>
 
-    <changeSet id="20220608004602-1-relations" author="jhipster">
-
-        <createTable tableName="rel_budget__payment">
-            <column name="payment_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="budget_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="budget_id, payment_id" tableName="rel_budget__payment"/>
-    </changeSet>
-
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

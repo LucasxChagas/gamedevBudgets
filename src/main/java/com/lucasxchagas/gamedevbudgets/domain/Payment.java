@@ -1,9 +1,6 @@
 package com.lucasxchagas.gamedevbudgets.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -27,11 +24,6 @@ public class Payment implements Serializable {
     @NotNull
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
-
-    @ManyToMany(mappedBy = "payments")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "sounds", "payments", "game" }, allowSetters = true)
-    private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -59,37 +51,6 @@ public class Payment implements Serializable {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
-    }
-
-    public Set<Budget> getBudgets() {
-        return this.budgets;
-    }
-
-    public void setBudgets(Set<Budget> budgets) {
-        if (this.budgets != null) {
-            this.budgets.forEach(i -> i.removePayment(this));
-        }
-        if (budgets != null) {
-            budgets.forEach(i -> i.addPayment(this));
-        }
-        this.budgets = budgets;
-    }
-
-    public Payment budgets(Set<Budget> budgets) {
-        this.setBudgets(budgets);
-        return this;
-    }
-
-    public Payment addBudget(Budget budget) {
-        this.budgets.add(budget);
-        budget.getPayments().add(this);
-        return this;
-    }
-
-    public Payment removeBudget(Budget budget) {
-        this.budgets.remove(budget);
-        budget.getPayments().remove(this);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

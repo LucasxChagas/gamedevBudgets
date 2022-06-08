@@ -22,13 +22,6 @@
         <dd>
           <span>{{ budget.createdAt | formatMediumDatetime }}</span>
         </dd>
-        <dt><span jhiTranslate="gamedevBudgetsApp.budget.payment">Payment</span></dt>
-        <dd>
-          <span *ngFor="let payment of budget.payments; let last = last">
-            <a [routerLink]="['/payment', payment?.id, 'view']">{{ payment.paymentType }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
         <dt><span jhiTranslate="gamedevBudgetsApp.budget.game">Game</span></dt>
         <dd>
           <div *ngIf="budget.game">

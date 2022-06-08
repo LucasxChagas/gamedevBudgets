@@ -2,9 +2,7 @@ package com.lucasxchagas.gamedevbudgets.service.dto;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -18,8 +16,6 @@ public class BudgetDTO implements Serializable {
     private String name;
 
     private ZonedDateTime createdAt;
-
-    private Set<PaymentDTO> payments = new HashSet<>();
 
     private GameDTO game;
 
@@ -45,14 +41,6 @@ public class BudgetDTO implements Serializable {
 
     public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Set<PaymentDTO> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<PaymentDTO> payments) {
-        this.payments = payments;
     }
 
     public GameDTO getGame() {
@@ -91,7 +79,6 @@ public class BudgetDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
-            ", payments=" + getPayments() +
             ", game=" + getGame() +
             "}";
     }

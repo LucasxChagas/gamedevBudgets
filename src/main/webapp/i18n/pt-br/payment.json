@@ -18,8 +18,7 @@
         "title": "Payment"
       },
       "id": "ID",
-      "paymentType": "Payment Type",
-      "budget": "Budget"
+      "paymentType": "Payment Type"
     }
   }
 }
