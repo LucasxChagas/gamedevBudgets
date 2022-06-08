@@ -1,0 +1,77 @@
+/**
+ * The Employee entity.
+ */
+ entity Game{
+ 	name String required,
+    thumbnail ImageBlob,
+    description TextBlob,
+    gender GameGender,
+ }
+ 
+entity Budget{
+	name String required,
+    createdAt ZonedDateTime
+ }
+ 
+ entity Payment{
+ 	paymentType String required,
+ }
+ 
+ 
+ entity Sounds{
+ 	name String required,
+    type SoundTypes,
+    format SoundFormats,
+ }
+ 
+ enum AssetType {
+ 	Character2D,
+    Character3D
+ }
+ 
+ 
+ enum SoundFormats {
+ 	MP3,
+    OGG,
+    WAV
+ }
+ 
+enum SoundTypes {
+	SoundTrack,
+    SFX
+}
+
+enum GamePlatform {
+	Mobile,
+    PC,
+    Consoles
+}
+ 
+ enum GameGender {
+    Fighting, 
+    Racing, 
+    Platformer2D,
+    Platformer3D,
+    FPS,
+    RTS,
+    TPS
+}
+
+relationship OneToMany
+{
+	Game{budgets(name)} to Budget{game(name)},
+}
+
+
+
+// Set pagination options
+paginate Game with pagination
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service Game with serviceImpl 
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
