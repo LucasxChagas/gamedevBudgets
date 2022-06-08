@@ -2,6 +2,8 @@ package com.lucasxchagas.gamedevbudgets.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -26,9 +28,15 @@ public class Payment implements Serializable {
     @Column(name = "payment_type", nullable = false)
     private String paymentType;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "game" }, allowSetters = true)
-    private Budget budget;
+    @ManyToMany
+    @JoinTable(
+        name = "rel_payment__budget",
+        joinColumns = @JoinColumn(name = "payment_id"),
+        inverseJoinColumns = @JoinColumn(name = "budget_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "game", "sounds", "payments" }, allowSetters = true)
+    private Set<Budget> budgets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -58,16 +66,28 @@ public class Payment implements Serializable {
         this.paymentType = paymentType;
     }
 
-    public Budget getBudget() {
-        return this.budget;
+    public Set<Budget> getBudgets() {
+        return this.budgets;
     }
 
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setBudgets(Set<Budget> budgets) {
+        this.budgets = budgets;
     }
 
-    public Payment budget(Budget budget) {
-        this.setBudget(budget);
+    public Payment budgets(Set<Budget> budgets) {
+        this.setBudgets(budgets);
+        return this;
+    }
+
+    public Payment addBudget(Budget budget) {
+        this.budgets.add(budget);
+        budget.getPayments().add(this);
+        return this;
+    }
+
+    public Payment removeBudget(Budget budget) {
+        this.budgets.remove(budget);
+        budget.getPayments().remove(this);
         return this;
     }
 

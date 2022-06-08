@@ -45,9 +45,10 @@
           </td>
           <td>{{ payment.paymentType }}</td>
           <td>
-            <div *ngIf="payment.budget">
-              <a [routerLink]="['/budget', payment.budget?.id, 'view']">{{ payment.budget?.id }}</a>
-            </div>
+            <span *ngFor="let budget of payment.budgets; let last = last">
+              <a class="form-control-static" [routerLink]="['/budget', budget.id, 'view']">{{ budget.name }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td class="text-end">
             <div class="btn-group">

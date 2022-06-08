@@ -49,9 +49,10 @@
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundTypes.' + sounds.type }}">{{ sounds.type }}</td>
           <td jhiTranslate="{{ 'gamedevBudgetsApp.SoundFormats.' + sounds.format }}">{{ sounds.format }}</td>
           <td>
-            <div *ngIf="sounds.budget">
-              <a [routerLink]="['/budget', sounds.budget?.id, 'view']">{{ sounds.budget?.id }}</a>
-            </div>
+            <span *ngFor="let budget of sounds.budgets; let last = last">
+              <a class="form-control-static" [routerLink]="['/budget', budget.id, 'view']">{{ budget.name }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
           </td>
           <td class="text-end">
             <div class="btn-group">

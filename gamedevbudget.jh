@@ -62,10 +62,10 @@ relationship OneToMany
 	Game{budgets(name)} to Budget{game(name)},
 }
 
-relationship ManyToOne
+relationship ManyToMany
 {
-	Sounds{Budget} to Budget,
-    Payment{Budget} to Budget,
+	Sounds{Budget(name)} to Budget{Sounds(name)},
+    Payment{Budget(name)} to Budget{Payment(maymentType)},
 
 }
 
