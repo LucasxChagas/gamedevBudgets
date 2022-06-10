@@ -11,6 +11,9 @@ const soundsRoute: Routes = [
   {
     path: '',
     component: SoundsComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
     canActivate: [UserRouteAccessService],
   },
   {
