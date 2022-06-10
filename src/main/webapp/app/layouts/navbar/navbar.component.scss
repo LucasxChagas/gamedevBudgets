@@ -7,7 +7,7 @@ Navbar
 
 .navbar-version {
   font-size: 0.65em;
-  color: $navbar-dark-color;
+  color: black;
 }
 
 .profile-image {
@@ -21,6 +21,16 @@ Navbar
   a.nav-link {
     font-weight: 400;
   }
+}
+
+.navbar-test {
+  transition-property: color;
+  transition-duration: 1s;
+  transition-delay: 0s;
+}
+
+.navbar-test:hover {
+  color: red;
 }
 
 /* ==========================================================================

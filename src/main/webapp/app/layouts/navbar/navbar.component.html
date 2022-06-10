@@ -1,9 +1,9 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark" style="background-color: black !important">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span jhiTranslate="global.title" class="navbar-title">GamedevBudgets</span>
-      <span class="navbar-version">{{ version }}</span>
+      <span class="navbar-title">GameDev</span>
+      <span class="navbar-title" style="color: red">Budget</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -21,7 +21,7 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
-            <span>
+            <span class="navbar-test">
               <fa-icon icon="home"></fa-icon>
               <span jhiTranslate="global.menu.home">Home</span>
             </span>
@@ -37,7 +37,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
-            <span>
+            <span class="navbar-test">
               <fa-icon icon="th-list"></fa-icon>
               <span jhiTranslate="global.menu.entities.main">Entities</span>
             </span>
@@ -89,6 +89,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span jhiTranslate="global.menu.entities.sounds">Sounds</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="sound"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.sound">Sound</span>
               </a>
             </li>
             <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
@@ -156,7 +168,7 @@
         </li>
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
-            <span>
+            <span class="navbar-test">
               <fa-icon icon="flag"></fa-icon>
               <span jhiTranslate="global.menu.language">Language</span>
             </span>
@@ -181,9 +193,9 @@
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
-            <span *ngIf="!account?.imageUrl">
-              <fa-icon icon="user"></fa-icon>
-              <span jhiTranslate="global.menu.account.main">Account</span>
+            <span class="navbar-test" *ngIf="!account?.imageUrl">
+              <fa-icon class="navbar-test" icon="user"></fa-icon>
+              <span class="navbar-test" jhiTranslate="global.menu.account.main">Account</span>
             </span>
             <span *ngIf="account?.imageUrl">
               <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />

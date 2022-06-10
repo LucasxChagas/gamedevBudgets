@@ -6,8 +6,38 @@ Main page styles
   display: inline-block;
   width: 347px;
   height: 497px;
-  background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+  background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
   background-size: contain;
+}
+
+.login-button {
+  background-color: black;
+  border-color: black;
+  transition-property: color;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.login-button:hover {
+  color: black;
+  background-color: white;
+  border-color: black;
+}
+
+.signin-button {
+  background-color: red;
+  border-color: red;
+  transition-property: color;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-delay: 0s;
+}
+
+.signin-button:hover {
+  color: red;
+  background-color: white;
+  border-color: red;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -17,7 +47,7 @@ Main page styles
   only screen and (min-resolution: 192dpi),
   only screen and (min-resolution: 2dppx) {
   .hipster {
-    background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+    background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
     background-size: contain;
   }
 }
