@@ -24,7 +24,7 @@
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Sounds",
-  "pagination": "no",
+  "pagination": "pagination",
   "readOnly": false,
   "relationships": [
     {

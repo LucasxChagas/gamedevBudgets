@@ -11,6 +11,9 @@ const paymentRoute: Routes = [
   {
     path: '',
     component: PaymentComponent,
+    data: {
+      defaultSort: 'id,asc',
+    },
     canActivate: [UserRouteAccessService],
   },
   {
